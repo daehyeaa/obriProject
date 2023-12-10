@@ -1,6 +1,7 @@
 package music.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,11 @@ public class msgController {
 	public int msgInsert(@RequestBody msgVO msg, Model model, HttpServletRequest request) {
 		
 		System.out.println("채팅 insert 시작");
-		
-		System.out.println("세션 아이디"+request.getAttribute("id"));
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		System.out.println("세션에서 받아온 userId" + userId);
+		msg.setUserId(userId);
+		System.out.println("세션 아이디"+request.getAttribute("userId"));
 		System.out.println("msg값들이 들어 갔는지 확인");
 		System.out.println(msg);
 		System.out.println("쪽지내용"+msg.getMsgText());

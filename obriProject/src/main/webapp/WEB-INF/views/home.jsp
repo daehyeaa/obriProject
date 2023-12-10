@@ -72,7 +72,7 @@
 			<a href="<c:url value='/home.do'/>"><img src="./images/184.png"></a>
 		</div>
 		<ul class="navbar_menu" id="navbar_menu">
-			<li><a href="boardListShow.do">구인</a></li>
+			<li><a href="joblist.do">구인</a></li>
 			<li><a href="prCardList.do">홍보</a></li>
 			<li><a href="board_list.do">커뮤니티</a></li>
 			<li><a href="board_list.do">공지</a></li>

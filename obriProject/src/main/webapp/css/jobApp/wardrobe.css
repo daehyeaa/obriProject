@@ -1,0 +1,324 @@
+@CHARSET "UTF-8";
+
+a {
+    text-decoration: none;
+}
+a:visited,
+a:hover,
+a:active,
+a:focus {
+    text-decoration: none;
+}
+
+/* ---------- modal css ---------- */
+#addWdr-input,
+#updateWdr-input {
+    border-radius: 5px;
+    border: none;
+    background-color: #eee;
+    margin-bottom: 12px;
+}
+#addWdr-input:focus, 
+#updateWdr-input:focus {
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.wdrNameValidate,
+.wdrUpdateValidate {
+    display: none;
+    margin-left: 5px;
+    font-size: 90%;
+    color: #bd081c;
+}
+
+/* follow modal */
+#follow-modal-body {
+    padding: 0px;
+}
+
+#wdr-follower-ul li:FIRST-CHILD .followUserWrap,
+#wdr-following-ul li:FIRST-CHILD .followUserWrap {
+    border: none;
+}
+#wdr-follower-ul li:hover,
+#wdr-following-ul li:hover {
+    background: #eee;
+}
+
+.followUserWrap {
+    height: 60px;
+    border-top: 1px solid #eee;
+    vertical-align: middle; 
+    padding: 16px 20px;
+    
+}
+
+.followUserImgWrap {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+    margin-right: 16px;
+}
+
+.followUserImgWrap>a {
+    widht: 30px;
+    height: 30px;
+}
+
+.followUserImg {
+    width: 120%;
+}
+
+.followUserInfo {
+    line-height: 28px;
+    font-weight: 500;
+}
+/*-----------------------------------------------*/
+
+
+#wdr-container {
+    width: 80%;
+    margin: auto;
+    margin-top: 60px;
+    margin-bottom: 100px;
+}
+
+#wdr-user-row {
+    margin-bottom: 40px;
+}
+
+/* User Profile Picture */
+#wdr-user {
+    margin: auto;
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    text-align: center;
+    overflow: hidden;
+    padding: 0px;
+}
+
+#wdr-user img {
+    width: 100%;
+    margin: auto;
+}
+
+/* User Profile Info*/
+.wdr-userInfo {
+    float: left;
+}
+
+.wdr-userId {
+    float: left;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+#wdr-user-follow {
+    margin-left: 40px;
+    margin-top: 12px;
+}
+
+#wdr-user-unfollow {
+    color: #fff;
+    margin-left: 40px;
+    margin-top: 12px;
+}
+
+.wdr-follow {
+    clear: both;
+    text-align: left;
+    margin-bottom: 50px;
+}
+
+.wdr-follow li {
+    float: left;
+    margin-top: 12px;
+    vertical-align: middle;
+}
+
+.wdr-followers {
+    float: left;
+    cursor: pointer;
+}
+
+.wdr-followings {
+    cursor: pointer;
+}
+
+.wdr-follow li h5 {
+    float: left;
+    font-size: 16px;
+    color: #333;
+    font-weight: 300;
+    margin: 0px 10px 0px 0px;
+}
+
+.wdr-follow li p {
+    float: left;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 30px;
+    margin-top: 2px;
+}
+
+#wdr-exp-wrap {;
+    display: block;
+    clear: both;
+    font-size: 13px;
+    line-hight: 1.7;
+    color: #aaa;
+}
+
+.wdr-exp{
+}
+
+
+/* Setting Button*/
+.wdr-btn {
+    padding-right: 10px;
+}
+
+.wdr-btn>ul {
+    margin-top: 10px;
+}
+
+.wdr-btn>ul>li {
+}
+
+/* Wardrobe List Content */
+ul.wdr-postList>li {
+    float: left;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 17px;
+}
+
+.wdr-postGrid {
+    background: #eee;
+    margin: auto  !important;
+    height: 120px  !important;
+    margin-bottom: 23px  !important;
+    border-radius: 10px  !important;
+    overflow: hidden !important;
+}
+
+.wdr-title {
+    display: block;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    text-shadow: 1px 1px #fff;
+}
+
+.wdr-post-cnt {
+    clear: both;
+    display: block;
+    font-size: 10px;
+    text-shadow: 1px 1px #fff;
+    color: #999;
+    margin-left: 11px;
+    padding-top: 5px;
+}
+
+.wdr-btn-group {
+    position: absolute;
+    right: 10px;
+    bottom: 19px;
+}
+
+
+#wdr-list-wrap {
+    clear: both !important;
+    margin: 0 !important;
+}
+
+#wdr-thumb-wrap {
+    margin: 0 !important;
+}
+
+.wdr-content {
+    padding: 5px !important;
+}
+
+.wdr-grid {
+    width: 100% !important;
+    height: 250px !important;
+    border-radius: 10px;
+    background: #fff ;
+    padding: 5px 0px 0px 6px;
+    margin: 3px;
+    cursor: pointer;
+    
+     /*Fade*/
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    overflow: hidden;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+
+.wdr-grid:hover, 
+.wdr-grid:focus, 
+.wdr-grid:active {
+    background-color: #f5f5f5;
+    text-decoration: none;
+}
+
+#wdr-thumb-wrap {
+    width: 98%;
+    margin: 3px;
+    overflow: hidden;
+    margin: 3px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.wdr-thumb {
+    padding:1px;
+    overflow: hidden;
+    height: 90px;
+    background: #eee;
+    background-size: 120%;
+}
+
+.wdr-thumb>img {
+	margin: auto;
+	width: 150%;
+	vertical-align: middle;
+}
+
+.wdr-thumb:nth-child(1), 
+.wdr-thumb:nth-child(4) {
+    margin-left: -2px
+}
+.wdr-thumb:nth-child(2), 
+.wdr-thumb:nth-child(5) {
+        margin-left: 1px;
+}
+.wdr-thumb:nth-child(3), 
+.wdr-thumb:nth-child(6) {
+        margin-left: 1px;
+}
+.wdr-thumb:nth-child(1), 
+.wdr-thumb:nth-child(2), 
+.wdr-thumb:nth-child(3) {
+        margin-top: -1px;
+}
+.wdr-thumb:nth-child(4), 
+.wdr-thumb:nth-child(5), 
+.wdr-thumb:nth-child(6) {
+        margin-top: 1px;
+}
+

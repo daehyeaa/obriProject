@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="music.dao.jobAppDao">
+	
+	<select id="getAppTotal" resultType="int">
+		select count(*) from jobApp where appDelYn = 'N'
+	</select>	
+	
+	<select id="selectAppList" parameterType="jobApp"
+		resultType="Map">
+		select * from 
+				  (select a.*,rowNum rn from 
+				  	( select AA.*, BB.USERNAME from jobapp AA, member BB 
+				  	                          where AA.USERID = BB.USERID 
+				  	                            AND AA.appDelYn = 'N' 
+				  	                            AND AA.jobNo = #{jobNo}
+				  	                          order by AA.appNo DESC) 
+				   a )
+		 where rn between #{startRow} and #{endRow}
+	</select>
+	
+	<update id="updateApp" parameterType="jobApp">
+		update jobApp set APPCHECK = 'Y', APPDELYN = 'N' where JOBNO = #{jobNo} and userId = #{userId}
+	</update>
+	
+	<update id="updateCancelApp" parameterType="jobApp">
+		update jobApp set APPCHECK = 'N', APPDELYN = 'Y' where JOBNO = #{jobNo} and APPNO = #{appNo}
+	</update>
+	
+	
+<!-- 	<select id="getJobTotal" parameterType="jobboard" resultType="int"> -->
+<!-- 		select count(*) from jobBoard -->
+<!-- 		<where> -->
+<!-- 			<if test="keyword != null and search !='subcon'"> -->
+<!-- 				${search} like '%'||#{keyword}||'%' -->
+<!-- 			</if> -->
+<!-- 			<if test="keyword != null and search=='subcon'"> -->
+<!-- 				jobSub like '%'||#{keyword}||'%' or -->
+<!-- 				jobText like '%'||#{keyword}||'%' -->
+<!-- 			</if> -->
+<!-- 		</where> -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="update" parameterType="jobboard"> -->
+<!-- 		update jobBoard set jobSpace=#{jobSpace},jobCd=#{jobCd}, -->
+<!-- 		jobSub=#{jobSub},jobText=#{jobText} where jobNo=#{jobNo} -->
+<!-- 	</update> -->
+	
+<!-- 	<update id="updateCount" parameterType="int"> -->
+<!-- 		update jobBoard set jobRcount = jobRcount+1 where jobNo=#{jobNo} -->
+<!-- 	</update> -->
+
+<!-- 	<select id="getJobBoard" parameterType="int" resultType="jobboard"> -->
+<!-- 		select * from jobBoard where jobNo=#{jobNo} -->
+<!-- 	</select> -->
+
+<!-- 	<update id="delete" parameterType="int"> -->
+<!-- 		update jobBoard set jobDelYn = 'Y' where jobNo=#{jobNo} -->
+<!-- 	</update> -->
+
+<!-- 	<select id="select" parameterType="int" resultType="jobboard"> -->
+<!-- 		select * from jobBoard where jobNo=#{jobNo} -->
+<!-- 	</select> -->
+
+</mapper>

@@ -9,6 +9,9 @@
 		<typeAlias alias="pr" type="music.model.prVO" />		
 		<typeAlias alias="prLike" type="music.model.prLikeVO" />
 		<typeAlias alias="msg" type="music.model.msgVO" />
+		<typeAlias alias="jobboard" type="music.model.jobBoardVO"/>
+		<typeAlias alias="jobreply" type="music.model.jobReplyVO"/>
+		<typeAlias alias="jobApp" type="music.model.jobAppVO"/>
 	</typeAliases>
 	
 </configuration>

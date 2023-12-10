@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE HTML>
-<%
 
-%>
+
 <html>
 <head>
 <title>홍보 상세 페이지</title>
@@ -151,7 +150,7 @@
    		let msgText = $("#msgText").val();
 //  		const recvId = ${map['USERID']};
   		let jsonData = {
-  				userId : '<%=request.getAttribute("id")%>',
+  				userId : '<%=request.getAttribute("userId")%>',
   				recvId : userId,
   				msgText : msgText
   		};

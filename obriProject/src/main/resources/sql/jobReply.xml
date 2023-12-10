@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="music.dao.jobReplyDao">
+
+	<select id="list" parameterType="int" resultType="jobreply">
+		select * from jobReply where jobNo=#{jobNo} and jobReDelYn = 'N' order by jobReNo
+	</select>
+	
+	<insert id="insert" parameterType="music.model.jobReplyVO">
+		insert into jobReply values(jobre_no_seq.nextval ,#{jobNo},#{userId}, #{jobReText},
+			2,1,sysdate,sysdate,'N')
+	</insert>
+	
+	<update id="update" parameterType="jobreply">
+		update jobReply set jobReText=#{jobReText},
+			jobReUpdate=sysdate where jobReNo=#{jobReNo}
+	</update>
+	
+	<update id="delete" parameterType="jobreply">
+		update jobReply set jobReDelYn='Y' , jobReUpdate = sysdate where jobReNo = #{jobReNo} and jobNo=#{jobNo} 
+	</update>
+		
+</mapper>
