@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="communityns">
+ 
+ 
+	<!-- 글작성 -->
+	<!-- <insert id="insertBoard" parameterType="community">
+		insert into com_board
+		values(com_no_seq.nextval,#{com_id},#{com_sub},#{com_text},
+		0,#{com_file, jdbcType=VARCHAR},sysdate,sysdate,'n')
+	</insert>  -->
+	<insert id="insertBoard" parameterType="community">
+		insert into comBoard(commNo, userId, commSub, commText, commCount, commFile, commDate, commUpdate, commDelYn, likeCnt)
+		 values(com_no_seq.nextval,#{userId},#{commSub},#{commText},0,#{commFile, jdbcType=VARCHAR},sysdate,sysdate,'N', 0)
+	</insert> 
+	
+	<!--  글목록  -->
+	<select id="listBoard" parameterType="community"  resultType="community">
+		<!--최신 -->
+		<if test="sort == 'recent' ">
+		select * from (select community.*,rowNum rn from (
+			select * from comBoard
+		<where>
+			<if test="keyword != null and search!='subcon'">
+				${search} like '%'||#{keyword}||'%'
+			</if>
+			<if test="keyword != null and search=='subcon'">
+				commSub like '%'||#{keyword}||'%' or
+				commText like '%'||#{keyword}||'%'
+			</if>
+			and  commDelYn = 'N'
+		</where>			
+			 order by commNo desc ) community )
+			where rn between #{startRow} and #{endRow} 
+		</if>
+		
+		<!-- 조회순 -->
+    <if test="sort == 'readcnt' ">
+         select * from (select community.*,rowNum rn from (
+         select * from comBoard
+      <where>
+         <if test="keyword != null and search!='subcon'">
+            ${search} like '%'||#{keyword}||'%'
+         </if>
+         <if test="keyword != null and search=='subcon'">
+            commSub like '%'||#{keyword}||'%' or
+            commText like '%'||#{keyword}||'%'
+         </if>
+         and  commDelYn = 'N'
+      </where>         
+          order by commCount desc, commNo desc) community )
+         where rn between #{startRow} and #{endRow} 
+       </if>
+       
+      <!-- 좋아요순  -->
+      <if test="sort == 'likecnt' ">
+         select * from (select community.*,rowNum rn from (
+         select * from comBoard
+      <where>
+         <if test="keyword != null and search!='subcon'">
+            ${search} like '%'||#{keyword}||'%'
+         </if>
+         <if test="keyword != null and search=='subcon'">
+            commSub like '%'||#{keyword}||'%' or
+            commText like '%'||#{keyword}||'%'
+         </if>
+         and  commDelYn = 'N'
+      </where>         
+          order by likeCnt desc, commNo desc) community )
+         where rn between #{startRow} and #{endRow}  
+	  </if>
+			
+	</select>
+	
+	<!-- 글 갯수 -->
+	<select id="getListCount" parameterType="community" resultType="int">
+		select count(*) from comBoard 
+		<where>
+		
+			<if test="keyword != null and search !='subcon'">
+				${search} like '%'||#{keyword}||'%'
+			</if>
+			<if test="keyword != null and search=='subcon'">
+				commSub like '%'||#{keyword}||'%'  or
+				commText like '%'||#{keyword}||'%'
+			</if>	
+	        and  commDelYn = 'N'
+		</where>
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateCount" parameterType="int">
+		update comBoard set commCount=commCount+1 where commNo=#{commNo}
+	</update>
+	
+	<!-- 상세 정보 -->
+	<select id="Content" parameterType="int" resultType="community">
+		select * from comBoard where commNo = #{commNo}
+	</select>
+	
+	<!-- 글삭제 -->
+	<update id="deleteBoard"  parameterType="int">
+		update comBoard set commDelYn='Y' where commNo=#{commNo}
+	</update>
+      
+      
+	<!-- 글수정 -->
+	<update id="updateBoard"   parameterType="community">
+		update comBoard  set  commSub=#{commSub}, commText=#{commText}, commUpdate=SYSDATE,
+		commFile=#{commFile, jdbcType=VARCHAR}
+		where commNo = #{commNo}	
+	</update>
+
+
+<!-- 커뮤니티 게시판 좋아요 갯수 조회 -->
+	 <select id="likeCount" parameterType="community" resultType="int">
+		select count(*) from comLike where commNo=#{commNo} and commLike = 'Y'
+	</select>
+
+
+
+<!-- 커뮤니티 게시판 게시글 최초 좋아요 갯수 증가 -->
+<!--     <update id="upLike" parameterType="int"> -->
+<!-- 	update comBoard set likeCnt = likeCnt+1 where commNo=#{commNo} -->
+<!--     </update>  -->
+    
+ <!-- 커뮤니티 게시판 게시글 좋아요 갯수 변경 -->   
+    <update id="changeLike"  parameterType="community">
+    	update comBoard set 
+    	
+			<if test='commLike == "Y" '>
+				likeCnt = likeCnt-1
+			</if>
+			
+			<if test='commLike ==  "N" '>
+				likeCnt = likeCnt+1
+			</if>	
+		where commNo=#{commNo} 
+    </update> 
+    
+    
+    </mapper>
+
+    	
+   

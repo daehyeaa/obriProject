@@ -7,9 +7,9 @@
 		select * from jobReply where jobNo=#{jobNo} and jobReDelYn = 'N' order by jobReNo
 	</select>
 	
-	<insert id="insert" parameterType="music.model.jobReplyVO">
+	<insert id="insert" parameterType="jobreply">
 		insert into jobReply values(jobre_no_seq.nextval ,#{jobNo},#{userId}, #{jobReText},
-			2,1,sysdate,sysdate,'N')
+			jobre_no_seq.nextval,1,sysdate,sysdate,'N')
 	</insert>
 	
 	<update id="update" parameterType="jobreply">

@@ -32,19 +32,26 @@
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 	<main class="form-findid w-500 m-auto">
 		<form method="post" action="editCheckOk.do" onsubmit="return check()">
-			<br> <img src="images/184.png" alt="" width="100" height="100">
-			<br> <br>
+			<br> <img src="./images/logo.png" alt="Logo" width="100px" height="40px"
+					onclick="location.href='home.do'" style="cursor: pointer;"> <br>
+			<br>
 			<h1 class="h4 mb-3">
 				<b>오브리</b>&nbsp; 회원정보 수정
 			</h1>
 			<br>
 			<div class="form-floating">
-				<input type="password" class="form-control" id="userPw" name="userPw"
-					placeholder="pw"> <label for="userPw">비밀번호 재입력</label>
+				<input type="password" class="form-control" id="userPw"
+					name="userPw" placeholder="pw"> <label for="userPw">비밀번호
+					재입력</label>
 			</div>
 
 			<button class="btn w-100 pr-100 fw-bold" type="submit">확인</button>
 		</form>
+
+		<p class="mt-4 mb-3 text-body-secondary" align="center"
+			style="font-size: 90%">비밀번호가 기억나지 않으신가요?<br>
+			<a href="findPw.do" style="color: gray">비밀번호 찾기</a><br>
+		</p>
 
 		<p class="mt-5 mb-3 text-body-secondary" align="center"
 			style="font-size: 80%">&copy; 2023. 1조</p>

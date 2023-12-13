@@ -25,7 +25,8 @@
 	<main class="form-findid w-500 m-auto">
 		<form method="post" action="editPwOk.do"
 			onsubmit="return editPwCheck()">
-			<br> <img src="images/184.png" alt="" width="100" height="100">
+			<br> <img src="./images/logo.png" alt="Logo" width="100px" height="40px"
+					onclick="location.href='home.do'" style="cursor: pointer;">
 			<br> <br>
 			<h1 class="h4 mb-3">
 				<b>오브리</b>&nbsp; 비밀번호 변경하기

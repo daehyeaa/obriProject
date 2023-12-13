@@ -32,7 +32,8 @@
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 	<main class="form-findid w-500 m-auto">
 		<form method="post" action="delCheckOk.do" onsubmit="return check()">
-			<br> <img src="images/184.png" alt="" width="100" height="100">
+			<br> <img src="./images/logo.png" alt="Logo" width="100px" height="40px"
+					onclick="location.href='home.do'" style="cursor: pointer;">
 			<br> <br>
 			<h1 class="h4 mb-2">
 				<b>오브리</b>&nbsp; 회원 탈퇴

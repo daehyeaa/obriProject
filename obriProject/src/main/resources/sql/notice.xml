@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+
+	<!-- 공지사항 게시판 글갯수 -->
+	<select id="noticeCount" parameterType="adnotvo" resultType="int">
+		select count(*) from notBoard where
+		<if test="keyword != null and search !='subcon'">
+			${search} like '%'||#{keyword}||'%' and
+		</if>
+		<if test="keyword != null and search=='subcon'">
+			notSub like '%'||#{keyword}||'%' or
+			notText like '%'||#{keyword}||'%' and
+		</if>
+		notDelYn='N'
+	</select>
+
+	<!-- 공지사항 글목록 -->
+	<select id="noticeList" parameterType="adnotvo" resultType="Map">
+		select * from ( select a.*, rowNum rn from (
+		select A.*, B.adminName
+		from notBoard A, AdMIN B
+		where A.adminId = B.adminId and notDelyn = 'N' 
+		<if test="keyword != null and search!='subcon'">
+			and ${search} like '%'||#{keyword}||'%'  
+		</if>
+		<if test="keyword != null and search=='subcon'">
+			and ( A.notSub like '%'||#{keyword}||'%' or
+			A.notText like '%'||#{keyword}||'%' )
+		</if>
+		order by A.notNo desc) a) 
+		where rn between #{startRow} and #{endRow} 
+		</select>
+
+	<!-- 조회수 1증가 -->
+	<update id="hit" parameterType="int">
+		update notBoard set 
+		notRcount=notRcount+1 
+		where notNo=#{notNo}
+	</update>
+
+	<!-- 공지사항 상세읽기 -->
+	<select id="notView" parameterType="int" resultType="Map">
+		select A.*, B.adminName
+		from notBoard A, ADMIN B
+		where A.adminId = B.adminId
+		and A.notNo=#{notNo}
+
+		<!-- select * from notBoard where notNo=#{notNo} -->
+	</select>
+
+	<!-- 공지사항 작성 -->
+	<insert id="insertNotice" parameterType="adnotvo">
+		insert into notBoard
+		(notNo,adminId,notSub,notText,notRcount,notDate,notUpdate,notDelYn)
+		values
+		(not_no_seq.nextval,'admin',#{notSub},#{notText},0,SYSDATE,SYSDATE,'N')
+	</insert>
+
+	<!-- 공지사항 삭제 -->
+	<update id="deleteNotice" parameterType="int">
+		update notBoard set
+		notDelYn='Y' where notNo=#{notNo}
+	</update>
+
+	<!-- 공지사항 수정 -->
+	<update id="updateNotice" parameterType="adnotvo">
+		update notBoard set
+		notSub = #{notSub}, notText=#{notText}, notUpdate = sysdate
+		where notNo = #{notNo}
+	</update>
+
+</mapper>

@@ -1,0 +1,60 @@
+/* 전체 페이지 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+.container {
+    margin-top: 30px;
+}
+
+/* 헤더 스타일 */
+header.main {
+    background-color: #A490D5;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* 섹션 스타일 */
+section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 이미지 스타일 */
+img.imga {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* 좋아요 아이콘 스타일 */
+.likeImage {
+    cursor: pointer;
+}
+
+.likeImage:hover {
+    filter: brightness(85%);
+}
+
+/* 모달 스타일 */
+.modal-header {
+    background-color: #A490D5;
+    color: white;
+}
+
+.btn {
+    background-color: #A490D5 !important; /* 포인트 컬러로 변경 */
+    border-color: #A490D5 !important; /* 포인트 컬러로 변경 */
+    color: white !important; /* 버튼 텍스트 색상 추가 (필요에 따라) */
+}
+
+.btn:hover {
+    background-color: #8C77B9 !important; /* 포인트 컬러의 더 어두운 버전으로 변경 */
+    border-color: #8C77B9 !important; /* 포인트 컬러의 더 어두운 버전으로 변경 */
+}

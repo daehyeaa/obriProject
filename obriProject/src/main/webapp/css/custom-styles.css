@@ -1,0 +1,192 @@
+/* custom-styles.css */
+body {
+    display: flex;
+	justify-content: center;
+	font-family: Arial, sans-serif;
+	background-color: #F8F9FA;
+	color: #444;
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+.container-sm {
+	max-width: 840px; /* 부트스트랩 container-sm의 max-width 값과 동일하게 설정 */
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+/* 작은 화면에서 좀 더 좁게 보이도록 */
+@media ( max-width : 576px) {
+	.container-sm {
+		max-width: 100%; /* 화면 너비에 따라 최대 너비 100%로 조정 */
+		margin: 0 auto;
+	}
+}
+
+/* 테이블 스타일 */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	white-space: no-wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+th, td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+    line-height: 16px;
+	white-space: no-wrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+th {
+	background-color: #A490D5;
+	color: #fff;
+	font-weight: bold;
+}
+
+td {
+	color: #333;
+}
+
+td a {
+	text-decoration: none;
+	color: #333;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+.pagination .page-link:hover {
+    background-color: #ddd;
+  }
+
+.pagination .active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+  }
+
+.search_bar {
+  	display: flex;
+  	justify-content: center;
+}
+
+.search_box{
+    width: 100px;
+    height: 44px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    background-color: #fff;
+}
+
+.search_box:focus {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search_text {
+  width: 300px;
+  height: 44px;
+  font-size: 15px;
+  border: 1px solid #C4C4C4;
+  border-radius: 10px;
+  outline: none;
+  padding-left: 10px;
+  background-color: #fff;
+}
+
+.search_text:focus {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sort_box {
+    width: 100px;
+    height: 44px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 12px 13px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    background-color: #fff;
+}
+
+.sort_box:focus {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sort-container, .btn-container {
+    display: flex;
+}
+
+.btn {
+    width: 80px;
+    height: 44px;
+    display: inline-block;
+    font-weight: bold;
+    background-color: #A490D5;
+    text-align: center;
+    user-select: none;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    border-radius: 10px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #A490D5;
+    color: #fff;
+    border-color: #A490D5;
+}
+
+.btn:not(:hover) {
+    background-color: transparent;
+    border: 1px solid #A490D5;
+    color: #A490D5;
+}
+.community-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#commInsert {
+    display: inline-block;
+    margin-right: 10px;
+}

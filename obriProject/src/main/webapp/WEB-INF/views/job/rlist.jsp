@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:set var="path" value="${pageContext.request.contextPath }" />
+
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +33,7 @@ console.log("여기 들어왔나요???");
 			   +"<input type='button' value='취소' onclick='rstop("+jobNo+")'>");	
 		});
 	});
+	
 	function reUp(id,jobNo){  // 수정 버튼
 		console.log("수정은 들어왔니?");
 		var jobReText = $('#tt_'+ id).val();
@@ -51,45 +54,62 @@ console.log("여기 들어왔나요???");
 	}		
 </script>
 
+<style>
+#date_tr1 {
+	border-top: 2px solid black;
+	border-bottom: 1px solid black;
+}
+
+#date_tr2 {
+	border-bottom: 1px solid black;
+}
+
+.link-style {
+	font-size: 13px;
+	text-decoration: none;
+}
+
+</style>
+
 </head>
 <body>
 	<div class="container" align="center">
-		<h2 class="text-primary">댓글</h2>
-		<table>
-			<tr>
-				<td>작성자</td>
-				<td>내용</td>
-				<td>수정일</td>
+		<c:if test="${not empty rlist}">
+			<h4 class="text-primary" align="left">댓글 목록</h4>
+		</c:if>
+		<table width="650px" cellpadding="10">
+			<!-- <tr>
+				<td align="center">작성자</td>
+				<td align="center">내용</td>
+				<td align="center">수정일</td>
 				<td></td>
-				
-			</tr>
+			</tr> -->
 			<c:forEach var="jrb" items="${rlist}">
-				<tr>
+				<tr colspan="3" id="date_tr1">
 					<td>${jrb.userId}</td>
-					<td id="td_${jrb.jobReNo}">${jrb.jobReText}</td>
-					<td>${jrb.jobReUpdate}</td>
-					<td>${jrb.jobNo}</td>
-					<td id="btn_${jrb.jobReNo}">
-						<c:if test="${jrb.userId == sessionScope.userId}">
-							<input type="button" value="수정" class="redit" id="${jrb.jobReNo}" data-jobNo="${jrb.jobNo}">
-							<input type="button" value="삭제" onclick="del(${jrb.jobReNo},${jrb.jobNo})">
-						</c:if>
-					</td>
+					<td id="btn_${jrb.jobReNo}" align="right" colspan="2">
+					<c:if test="${jrb.userId == sessionScope.userId}">
+							<a href="#" class="redit link-style" id="${jrb.jobReNo}"
+								data-jobNo="${jrb.jobNo}">수정</a> | 
+
+							<a href="#" onclick="del(${jrb.jobReNo},${jrb.jobNo})"
+								class="link-style">삭제</a>
+
+							<%-- <input type="button" value="수정" class="redit button-style" id="${jrb.jobReNo}" data-jobNo="${jrb.jobNo}">
+							<input type="button" value="삭제" onclick="del(${jrb.jobReNo},${jrb.jobNo})" class="button-style"> --%>
+							<%-- <input type="button" value="수정" class="redit" id="${jrb.jobReNo}" data-jobNo="${jrb.jobNo}">
+							<input type="button" value="삭제" onclick="del(${jrb.jobReNo},${jrb.jobNo})"> --%>
+						</c:if></td>
+				</tr>
+				<tr>
+					<td id="td_${jrb.jobReNo}" colspan="3">${jrb.jobReText}</td>
+				</tr>
+				<tr id="date_tr2">
+					<td colspan="3" align="right" style="font-size: 12px;"><fmt:formatDate
+							value="${jrb.jobReUpdate}" pattern="yyyy.MM.dd HH:mm" /></td>
 				</tr>
 			</c:forEach>
-		</table> 
+		</table>
 	</div>
-	<%-- <div class="card my-4">
-		<h5 class="card-header">댓글쓰기</h5>
-		<div class="card-body">
-			<form name="comment-form" action="/board/comment/write" method="post" autocomplete="off">
-				<div class="form-group">
-					<input type="hidden" name="jobReRel" value="${jobReRel}" />
-					<textarea name="content" class="form-control" rows="3"></textarea>
-				</div>
-				<button type="submit" class="btn btn-primary">입력</button>
-			</form>
-		</div>
-	</div> --%>
 </body>
 </html>

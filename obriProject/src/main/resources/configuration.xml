@@ -1,18 +1,52 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
 
 	<typeAliases>
-		<typeAlias alias="mb" type="music.model.memberVO" />
-		<typeAlias alias="pr" type="music.model.prVO" />		
+		<typeAlias alias="mb"  type="music.model.memberVO" />
+		<typeAlias alias="pr" type="music.model.prVO" />
 		<typeAlias alias="prLike" type="music.model.prLikeVO" />
 		<typeAlias alias="msg" type="music.model.msgVO" />
-		<typeAlias alias="jobboard" type="music.model.jobBoardVO"/>
-		<typeAlias alias="jobreply" type="music.model.jobReplyVO"/>
-		<typeAlias alias="jobApp" type="music.model.jobAppVO"/>
-	</typeAliases>
-	
-</configuration>
 
+		<!-- 구인 -->
+		<typeAlias alias="jb" type="music.model.jobBoardVO" />
+		<typeAlias alias="jobapp" type="music.model.jobAppVO" />
+		<typeAlias alias="jobreply" type="music.model.jobReplyVO" />
+		<typeAlias alias="msg" type="music.model.msgVO" />
+
+		<!-- 관리자관련 -->
+		<typeAlias alias="adminvo" type="music.model.adminVO" />
+		<typeAlias alias="adnotvo" type="music.model.noticeVO" />
+		<typeAlias alias="qnavo" type="music.model.qnaVO" />
+		<typeAlias alias="admemvo" type="music.model.adminMemberVO" />
+		<typeAlias alias="adjobvo" type="music.model.adminJobVO" />
+		<typeAlias alias="adprvo" type="music.model.adminPrVO" />
+		<typeAlias alias="adcommvo" type="music.model.adminCommVO" />
+
+		<!-- 커뮤니티 -->
+		<typeAlias alias="community" type="music.model.communityVO" />
+		<typeAlias alias="commReply" type="music.model.commReplyVO" />
+		<typeAlias alias="commlike" type="music.model.commLikeVO" />
+
+		<!-- mypage관련 -->
+		<typeAlias alias="UserInfo" type="music.model.mypage.UserInfoVO" />
+		<typeAlias alias="InfoCount" type="music.model.mypage.InfoCountVO" />
+		<typeAlias alias="JobInfo" type="music.model.mypage.JobInfoVO" />
+		<typeAlias alias="StatusCount" type="music.model.mypage.StatusCountVO" />
+		<typeAlias alias="jobBoard" type="music.model.mypage.jobBoardVO" />
+		<typeAlias alias="Paging" type="music.model.mypage.PagingVO" />
+		<typeAlias alias="StatusInfo" type="music.model.mypage.StatusInfoVO" />
+		<typeAlias alias="StatusWaitingInfo" type="music.model.mypage.StatusWaitingInfoVO" />
+		<typeAlias alias="StatusFinalInfo" type="music.model.mypage.StatusFinalInfoVO" />
+		<typeAlias alias="LikesListComm" type="music.model.mypage.LikesListCommVO" />
+		<typeAlias alias="LikesListPR" type="music.model.mypage.LikesListPRVO" />
+		<typeAlias alias="PrBoard" type="music.model.mypage.PrBoardVO" />
+		<typeAlias alias="CommInfo" type="music.model.mypage.CommInfoVO" />
+		<typeAlias alias="CommReplyInfo" type="music.model.mypage.CommReplyInfoVO" />
+		<typeAlias alias="MessageInfo" type="music.model.mypage.MessageInfoVO" />
+		<typeAlias alias="QnAListsInfoVO" type="music.model.mypage.QnAListsInfoVO" />
+
+	</typeAliases>
+
+</configuration>

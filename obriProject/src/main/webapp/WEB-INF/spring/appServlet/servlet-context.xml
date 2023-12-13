@@ -1,56 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd 
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/css/" />
 	<resources mapping="/js/**" location="/js/" />
 	<resources mapping="/fonts/**" location="/fonts/" />
 	<resources mapping="/images/**" location="/images/" />
+	<!-- favicon파일 루트 설정 -->
+	<resources mapping="/favicon/**" location="/favicon/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
 	<context:component-scan base-package="music" />
-	
-	<!-- 인터셉터 설정 -->	
+
+	<!-- 인터셉터 설정 -->
 	<beans:bean id="sessionChk"
 		class="music.controller.SessionCheckInter" />
 	<interceptors>
 		<interceptor>
 			<mapping path="/editCheck.do" />
 			<mapping path="/editPw.do" />
-			<mapping path="/delMem.do" />
-			<mapping path="/editCheckOk.do" />
-			<mapping path="/editMem.do" />
 			<mapping path="/editMemOk.do" />
+			<mapping path="/editMem.do" />
 			<mapping path="/editPwOk.do" />
 			<mapping path="/delCheckOk.do" />
+			<mapping path="/delMem.do" />
+
+			<mapping path="/qna_form.do" />
+
+
 			<beans:ref bean="sessionChk" />
 		</interceptor>
 	</interceptors>
-	
-	<!-- 파일 업로드  설정 --> <!-- 이 빈객체가 있어야 업로드가 가능하다 -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="maxUploadSize" value="10000000"/>	
+
+	<!-- 인터셉터 설정 -->
+	<beans:bean id="adminSessionChk"
+		class="music.controller.AdminSessionCheckInter" />
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin_notice.do" />
+			<mapping path="/notice_write.do" />
+			<mapping path="/notice_delete_selected.do" />
+			<mapping path="/admin_notice_read.do" />
+			<mapping path="/notice_edit.do" />
+			<mapping path="/admin_qna.do" />
+			<mapping path="/qna_read.do" />
+			<mapping path="/admin_memberlist.do" />
+			<mapping path="/admin_user_view.do" />
+			<mapping path="/admin_job.do" />
+			<mapping path="/admin_job_read.do" />
+			<mapping path="/admin_pr.do" />
+			<mapping path="/admin_pr_read.do" />
+			<mapping path="/admin_comm.do" />
+			<mapping path="/admin_comm_read.do" />
+			<beans:ref bean="adminSessionChk" />
+		</interceptor>
+	</interceptors>
+
+	<!-- 파일 업로드 설정 --> <!-- 이 빈객체가 있어야 업로드가 가능하다 -->
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
 	
+	<!-- webSocket -->
+	<!-- <default-servlet-handler/> -->
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo"/>
+		<websocket:handshake-interceptors>
+			<!-- httpSession에 접근하기 위해(로그인된 사람의 아이디나 이메일을 확인) -->
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<websocket:sockjs />
+	</websocket:handlers>
+	<!-- 웹 소켓 핸들러 -->
+	<beans:bean id="echoHandler" class="music.websocket.EchoHandler"/>
+
 </beans:beans>

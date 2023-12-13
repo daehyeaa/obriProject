@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commReplyns">
+
+ 
+	<!-- 댓글 입력 -->
+	<insert id="replyInsert" parameterType="commReply">
+		insert into comReply
+		values(comre_no_seq.nextval,#{commNo},#{commReId},#{commReText},sysdate,sysdate,'N','N')
+	</insert>
+
+	<!-- 댓글 목록 -->
+	<select id="replyList" parameterType="int"
+		resultType="commReply">
+		select * from comReply where commNo=#{commNo} order by commReNo <!-- 부모가 
+			같은 댓글 정렬 댓글 번호 -->
+	</select>
+
+	<!-- 댓글 갯수 -->
+	<select id="reCount" resultType="int">
+		select count(*) from comReply where commReDelYn = 'N' and commNo=#{commNo}
+	</select>
+
+	<!-- 댓글 삭제 -->
+	<update id="replyDelete" parameterType="int">
+		update comReply set commReDelYn = 'Y' where commReNo=#{commReNo}
+	</update>
+
+	<!-- 비밀댓글 -->
+	<insert id="replySecret" parameterType="commReply">
+		insert into comReply
+		values(comre_no_seq.nextval,#{commNo},#{commReId},#{commReText},sysdate,sysdate,'N','Y')
+	</insert>
+
+</mapper>

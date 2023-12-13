@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commlikens">
+ 
+
+	<!-- 좋아요 데이터 분석 -->
+	<select id="select"  parameterType="commlike"  resultType="commlike">
+		select * from comLike where commNo=#{commNo} and userId=#{userId} 
+	</select>
+
+
+	<!-- 좋아요 입력 -->
+	<insert id="insert"  parameterType="commlike">
+		insert into comLike values	(COM_LIKE_SEQ.nextval,#{commNo},'Y',#{userId})
+	</insert>
+
+
+	<!-- 좋아요 변경 -->
+	<update id="update"  parameterType="Map">
+		update comLike set 
+		
+		<if test='commLike == "Y" '>
+				 commLike='N'
+		</if>
+		<if test='commLike == "N" '>
+				 commLike='Y'	
+		</if>		
+		
+		 where userId=#{userId} and commNo=#{commNo}
+	</update>
+	
+	<!-- 좋아요 수 조회 -->
+	<!-- <select id="likeCnt" parameterType="commlike" resultType="int">
+		select (*) count comLike where commNo=#{commmno} and commLike = 'Y'
+	</select> -->
+	
+
+</mapper>

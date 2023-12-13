@@ -11,13 +11,19 @@ import music.model.jobAppVO;
 public interface jobAppDao {
 
 
-	public List<Map<String, Object>> selectAppList(jobAppVO app);
+	public List<Map<String, Object>> selectAppList(jobAppVO jobapp);
+
+	public int getAllTotal(jobAppVO jobapp);
+
+	public int updateApp(jobAppVO jobapp);
+
+	public void updateCancelApp(jobAppVO jobapp);
+
+	public int insertApply(jobAppVO jobapp);
+
+//	public int updateApply(jobAppVO jobapp);
 
 	public int getAppTotal();
-
-	public int updateApp(jobAppVO app);
-
-	public void updateCancelApp(jobAppVO app);
 	
 	
 }

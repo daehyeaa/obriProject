@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+	<!-- ID일치 검색 -->
+	<select id="logincheck" parameterType="String"
+		resultType="adminvo">
+		select * from admin where adminId = #{id}
+	</select>
+	
+	<!-- 유저 수 -->
+	<select id="memberCount" parameterType="admemvo" resultType="int">
+		select count(*)
+		from member
+		<if test="keyword != null">
+			where ${search} like '%'||#{keyword}||'%'
+		</if>
+	</select>
+	
+	<!-- 유저 목록 -->
+	<select id="memberList" parameterType="admemvo" resultType="Map">
+		select * from ( select a.*, rowNum rn from ( 
+		select * from member
+		<if test="keyword != null">
+			where ${search} like '%'||#{keyword}||'%'
+		</if>
+		order by userDate desc) a) 
+		where rn between #{startRow} and #{endRow} 
+	</select>
+	
+	<!-- 유저 상세보기 -->
+	<select id="userView" parameterType="String" resultType="Map">
+		select *
+		from member
+		where userId=#{userId}
+	</select>
+	
+	<!-- 유저 정지 -->
+	<update id="blockMember" parameterType="String">
+		update Member set 
+		userDelYn='X' where userId=#{userId}
+	</update>
+	
+	<!-- 유저 정지해제 -->
+	<update id="nonblockMember" parameterType="String">
+		update Member set 
+		userDelYn='N' where userId=#{userId}
+	</update>
+	
+	<!-- 유저 삭제 -->
+	<update id="deleteMember" parameterType="String">
+		update Member set 
+		userDelYn='Y' where userId=#{userId}
+	</update>
+	
+	<!-- 구인 게시판 글갯수 -->
+	<select id="jobCount" parameterType="adjobvo" resultType="int">
+		select count(*)
+		from (select A.*, B.userName from jobBoard A, member B
+		where A.userId = B.userId)
+		<if test="keyword != null and search !='user'">
+			where ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			where userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%'
+		</if>
+	</select>
+
+	<!-- 구인 글목록 -->
+	<select id="jobList" parameterType="adjobvo" resultType="Map">
+		select * from ( select a.*, rowNum rn from (
+		select A.*, B.userName  
+		from jobBoard A, member B
+		where A.userId = B.userId
+		<if test="keyword != null and search !='user'">
+			and ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			and (userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%')
+		</if>
+		order by A.jobNo desc) a) 
+		where rn between #{startRow} and #{endRow} 
+	</select>
+	
+	<!-- 구인 상세읽기 -->
+	<select id="jobView" parameterType="int" resultType="Map">
+		select A.*, B.userName
+		from jobBoard A, member B
+		where A.userId = B.userId
+		and A.jobNo=#{jobNo}
+	</select>
+	
+	<!-- 구인 삭제 -->
+	<update id="deleteJob" parameterType="int">
+		update jobBoard set 
+		qnaDelYn='Y' where jobNo=#{jobNo}
+	</update>
+
+	<!-- 홍보 게시판 글갯수 -->
+	<select id="prCount" parameterType="adprvo" resultType="int">
+		select count(*)
+		from (select A.*, B.userName from prBoard A, member B
+		where A.userId = B.userId)
+		<if test="keyword != null and search !='user'">
+			where ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			where userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%'
+		</if>
+	</select>
+	
+	<!-- 홍보 글목록 -->
+	<select id="prList" parameterType="adprvo" resultType="Map">
+		select * from ( select a.*, rowNum rn from (
+		select A.*, B.userName  
+		from prBoard A, member B
+		where A.userId = B.userId
+		<if test="keyword != null and search !='user'">
+			and ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			and (userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%')
+		</if>
+		order by A.prNo desc) a) 
+		where rn between #{startRow} and #{endRow} 
+	</select>
+	
+	<!-- 홍보 상세읽기 -->
+	<select id="prView" parameterType="int" resultType="Map">
+		select A.*, B.userName
+		from prBoard A, member B
+		where A.userId = B.userId
+		and A.prNo=#{prNo}
+	</select>
+	
+	<!-- 홍보 삭제 -->
+	<update id="deletePr" parameterType="int">
+		update prBoard set 
+		qnaDelYn='Y' where prNo=#{prNo}
+	</update>
+	
+	
+	<!-- 커뮤니티 게시판 글갯수 -->
+	<select id="commCount" parameterType="adcommvo" resultType="int">
+		select count(*)
+		from (select A.*, B.userName from comBoard A, member B
+		where A.userId = B.userId)
+		<if test="keyword != null and search !='user'">
+			where ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			where userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%'
+		</if>
+	</select>
+	
+	<!-- 커뮤니티 글목록 -->
+	<select id="commList" parameterType="adcommvo" resultType="Map">
+		select * from ( select a.*, rowNum rn from (
+		select A.*, B.userName  
+		from comBoard A, member B
+		where A.userId = B.userId
+		<if test="keyword != null and search !='user'">
+			and ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			and (userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%')
+		</if>
+		order by A.commNo desc) a) 
+		where rn between #{startRow} and #{endRow} 
+	</select>
+	
+	<!-- 커뮤니티 상세읽기 -->
+	<select id="commView" parameterType="int" resultType="Map">
+		select A.*, B.userName
+		from comBoard A, member B
+		where A.userId = B.userId
+		and A.commNo=#{commNo}
+	</select>
+	
+	<!-- 커뮤니티 삭제 -->
+	<update id="deleteComm" parameterType="int">
+		update comBoard set 
+		qnaDelYn='Y' where commNo=#{commNo}
+	</update>
+	
+
+</mapper>

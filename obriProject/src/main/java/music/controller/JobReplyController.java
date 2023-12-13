@@ -21,16 +21,16 @@ public class JobReplyController {
 	@Autowired
 	private jobBoardService jbs;
 
-	@RequestMapping("/test.do")
-	public String test(Model model) {
-		System.out.println("테스트 들어옴");
-		jobBoardVO jobBoard = new jobBoardVO();
-		int jobNo = 2;
-		jobBoard.setJobNo(jobNo);
-		jobBoard = jbs.select(jobNo); // 조회
-		model.addAttribute("jobBoard", jobBoard);
-		return "job/job_board_view";
-	}
+//	@RequestMapping("/test.do")
+//	public String test(Model model) {
+//		System.out.println("테스트 들어옴");
+//		jobBoardVO jobBoard = new jobBoardVO();
+//		int jobNo = 2;
+//		jobBoard.setJobNo(jobNo);
+//		jobBoard = jbs.select(jobNo); // 조회
+//		model.addAttribute("jobBoard", jobBoard);
+//		return "job/job_board_view";
+//	}
 	
 	// 댓글 목록
 	@RequestMapping("/rlist/jobNo/{jobNo}/let.do")

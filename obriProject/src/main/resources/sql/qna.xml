@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qna">
+
+	<!-- 문의 게시판 글갯수 -->
+	<select id="qnaCount" parameterType="qnavo" resultType="int">
+		select count(*)
+		from (select A.*, B.userName from qnaBoard A, member B
+		where A.userId = B.userId)
+		<if test="keyword != null and search !='user'">
+			where ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			where userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%'
+		</if>
+	</select>
+
+	<!-- 문의 글목록 -->
+	<select id="qnaList" parameterType="qnavo" resultType="Map">
+		select * from ( select a.*, rowNum rn from (
+		select A.*, B.userName
+		from qnaBoard A, member B
+		where A.userId = B.userId
+		<if test="keyword != null and search !='user'">
+			and ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search =='user'">
+			and (userId like '%'||#{keyword}||'%' or
+			userName like
+			'%'||#{keyword}||'%')
+		</if>
+		order by A.qnaNo desc) a)
+		where rn between #{startRow} and #{endRow}
+	</select>
+
+	<!-- 문의 상세읽기 -->
+	<select id="qnaView" parameterType="int" resultType="Map">
+		select A.*,
+		B.userName
+		from qnaBoard A, member B
+		where A.userId = B.userId
+		and
+		A.qnaNo=#{qnaNo}
+	</select>
+
+	<!-- 문의 첨부파일이름 가져오기 -->
+	<select id="qnaFile" parameterType="int" resultType="Map">
+		select
+		qnaFile
+		from qnaBoard
+		where qnaNo = #{qnaNo}
+	</select>
+
+	<!-- 문의 작성 -->
+	<insert id="insertQna" parameterType="qnavo">
+		insert into qnaBoard
+		<if test="qnaFile != null">
+			(qnaNo, userId, qnaSub, qnaText, qnaFile, qnaDate,
+			qnaUpdate, qnaDelYn)
+			values
+			(qna_no_seq.nextval, #{userId, jdbcType=VARCHAR}, #{qnaSub},
+			#{qnaText}, #{qnaFile, jdbcType=VARCHAR},
+			SYSDATE, SYSDATE, 'N')
+		</if>
+		<if test="qnaFile == null">
+			(qnaNo, userId, qnaSub, qnaText, qnaDate, qnaUpdate,
+			qnaDelYn)
+			values
+			(qna_no_seq.nextval, #{userId, jdbcType=VARCHAR}, #{qnaSub}, #{qnaText},
+			SYSDATE, SYSDATE, 'N')
+		</if>
+	</insert>
+
+	<!-- 문의 삭제 -->
+	<update id="deleteQna" parameterType="int">
+		update qnaBoard set
+		qnaDelYn='Y' where qnaNo=#{qnaNo}
+	</update>
+
+</mapper>

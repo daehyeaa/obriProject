@@ -1,0 +1,94 @@
+/* custom-styles.css */
+body {
+    display: flex;
+	justify-content: center;
+	font-family: Arial, sans-serif;
+	background-color: #F8F9FA;
+	color: #444;
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+.container-sm {
+	max-width: 	840px; /* 부트스트랩 container-sm의 max-width 값과 동일하게 설정 */
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+/* 작은 화면에서 좀 더 좁게 보이도록 */
+@media ( max-width : 576px) {
+	.container-sm {
+		max-width: 100%; /* 화면 너비에 따라 최대 너비 100%로 조정 */
+		margin: 0 auto;
+	}
+}
+
+.container-sm input[type="text"] {
+	border: none;
+}
+
+.container-sm textarea {
+	border: none;
+}
+
+/* 테이블 스타일 */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	background-color: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+    line-height: 16px;
+}
+
+th {
+	background-color: #A490D5;
+	color: #fff;
+	font-weight: bold;
+}
+
+td {
+	color: #333;
+}
+
+td a {
+	text-decoration: none;
+	color: #333;
+}
+
+.btn {
+    width: 80px;
+    height: 44px;
+    display: inline-block;
+    font-weight: bold;
+    background-color: #A490D5;
+    text-align: center;
+    user-select: none;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    border-radius: 10px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #A490D5;
+    color: #fff;
+    border-color: #A490D5;
+}
+
+.btn:not(:hover) {
+    background-color: transparent;
+    border: 1px solid #A490D5;
+    color: #A490D5;
+}

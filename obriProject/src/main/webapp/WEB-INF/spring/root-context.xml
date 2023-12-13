@@ -4,44 +4,49 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+
+	<!-- property-placeholder -->
+	<context:property-placeholder location="classpath:config/application.properties" />
+
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="username" value="music"></property>
-		<property name="password" value="music123"></property>
+		<property name="driverClassName" value="${hikariConfig.driverClassName}"></property>
+		<property name="jdbcUrl" value="${hikariConfig.jdbcUrl}"></property>
+		<property name="username" value="${hikariConfig.username}"></property>
+		<property name="password" value="${hikariConfig.password}"></property>
+
 	</bean>
-	
+
 	<!-- HikariCP configuration -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
-	
+
 	<!-- 스프링으로 oracle db 연결 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:configuration.xml" />
 		<property name="mapperLocations" value="classpath:sql/*.xml" />
 	</bean>
-	
+
 	<!-- SqlSessionTemplate 객체 생성 -->
 	<bean id="session" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
-	</bean>	
-	
+	</bean>
+
 	<!-- mapper interface의 package설정 -->
-	<mybatis-spring:scan base-package="music.dao"/>
-	
+	<mybatis-spring:scan base-package="music.dao" />
+
+
 	<!-- SET default mail properties -->
 	<bean id="jMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="587" />
-		<property name="username" value="" />
-		<property name="password" value="" />
+		<property name="port" value="${jMailSender.port}" />
+		<property name="username" value="${jMailSender.username}" />
+		<property name="password" value="${jMailSender.password}" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.transport.protocol">smtp</prop>
@@ -52,5 +57,5 @@
 				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
 			</props>
 		</property>
-	</bean>	
+	</bean>
 </beans>

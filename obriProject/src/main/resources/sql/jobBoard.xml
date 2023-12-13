@@ -1,34 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="music.dao.jobBoardDao">
 
-	<insert id="jobInsert" parameterType="jobboard">
-	insert into jobBoard (jobNo,userId,jobCd,jobFin,jobSpace,jobAddress,
-	jobEndDate,jobConcert,jobSub,jobText,jobRcount,jobDate,jobDelYn)
-	values (job_no_seq.nextval,#{userId},#{jobCd},'N',#{jobSpace},#{jobAddress},
-	#{jobEndDate},#{jobConcert},#{jobSub},#{jobText},0,sysdate,
-	'N');
+	<!-- 글입력 -->
+	<insert id="jobInsert" parameterType="jb">
+		insert into jobBoard
+		(jobNo,userId,jobCd,jobFin,jobSpace,jobAddress,
+		jobEndDate,jobConcert,jobSub,jobText,jobRcount,jobDate,jobUpdate,jobDelYn)
+		values
+		(job_no_seq.nextval,#{userId},#{jobCd},'N',#{jobSpace},#{jobAddress},
+		#{jobEndDate},#{jobConcert},#{jobSub},#{jobText},0,sysdate,sysdate,'N')
 	</insert>
-	
-	<select id="jobList" parameterType="jobboard"
-		resultType="jobboard">
-		select * from (select a.*,rowNum rn from (
-		select * from jobBoard
-		<where>
-			<if test="keyword != null and search!='subcon'">
-				${search} like '%'||#{keyword}||'%'
-			</if>
-			<if test="keyword != null and search=='subcon'">
-				jobSub like '%'||#{keyword}||'%' or
-				jobText like '%'||#{keyword}||'%'
-			</if>
-		</where>
-		order by jobNo desc) a )
-		where rn between #{startRow} and #{endRow}
-	</select>
-	
-	<select id="getJobTotal" parameterType="jobboard" resultType="int">
+
+	<!-- 글갯수 -->
+	<select id="getJobTotal" parameterType="jb"
+		resultType="int">
 		select count(*) from jobBoard
 		<where>
 			<if test="keyword != null and search !='subcon'">
@@ -38,28 +26,70 @@
 				jobSub like '%'||#{keyword}||'%' or
 				jobText like '%'||#{keyword}||'%'
 			</if>
+			and jobDelYn = 'N'
 		</where>
 	</select>
-	
-	<update id="update" parameterType="jobboard">
-		update jobBoard set jobSpace=#{jobSpace},jobCd=#{jobCd},
-		jobSub=#{jobSub},jobText=#{jobText} where jobNo=#{jobNo}
-	</update>
-	
+
+	<!-- 글목록 검색기능포함 -->
+	<select id="jobList" parameterType="jb" resultType="Map">
+		select * from (select jobBoard.*,rowNum rn from
+		(select A.*, B.username from jobBoard A, member B
+		where A.userId = B.userId(+) and jobDelYn='N'
+		
+		<if test="keyword != null and search != 'subcon'">
+			and ${search} like '%'||#{keyword}||'%'
+		</if>
+		<if test="keyword != null and search == 'subcon'">
+			and (jobSub like '%'||#{keyword}||'%' or
+				 jobText like '%'||#{keyword}||'%' )
+		</if>
+		<choose>
+			<when test="jobListSel == 'View'">
+				order by jobRcount desc
+			</when>
+			<otherwise>
+				order by jobNo desc
+			</otherwise>
+		</choose>
+		) jobBoard)
+		where rn between #{startRow} and #{endRow}
+	</select>
+
+	<!-- 조회수 증가 -->
 	<update id="updateCount" parameterType="int">
-		update jobBoard set jobRcount = jobRcount+1 where jobNo=#{jobNo}
+		update jobBoard set
+		jobRcount=jobRcount+1 where jobNo=#{jobNo}
 	</update>
 
-	<select id="getJobBoard" parameterType="int" resultType="jobboard">
+	<!-- 상세정보 구하기 -->
+	<select id="getJobboard" parameterType="int"
+		resultType="jb">
 		select * from jobBoard where jobNo=#{jobNo}
 	</select>
 
+	<!-- 글수정 -->
+	<update id="update" parameterType="jb">
+		update jobBoard set
+		jobFin=#{jobFin, jdbcType=VARCHAR},jobSpace=#{jobSpace},
+		jobEndDate=#{jobEndDate},jobConcert=#{jobConcert},jobCd=#{jobCd},
+		jobSub=#{jobSub},jobText=#{jobText},jobAddress=#{jobAddress} 
+		where jobNo=#{jobNo}
+	</update>
+
+	<!-- 글삭제 -->
 	<update id="delete" parameterType="int">
 		update jobBoard set jobDelYn = 'Y' where jobNo=#{jobNo}
 	</update>
 
-	<select id="select" parameterType="int" resultType="jobboard">
-		select * from jobBoard where jobNo=#{jobNo}
+	<select id="selectJobMember" parameterType="String"
+		resultType="Map">
+		select userName from member where userId=#{userId}
 	</select>
+
+	<!-- 공연 완전 완료 시 update문 -->
+	<update id="updateAppDone" parameterType="int">
+		update jobApp set appDone = 'Y'
+		where jobNo = #{jobNo} and appDelYn = 'N' and appCheck = 'Y'
+	</update>
 
 </mapper>

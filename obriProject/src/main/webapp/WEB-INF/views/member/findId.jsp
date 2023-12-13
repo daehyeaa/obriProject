@@ -38,11 +38,14 @@
 	<main class="form-findid w-500 m-auto">
 		<c:if test="${empty findid}">
 			<form method="post" action="findIdCheck.do" onsubmit="return check()">
+				<div id="logo">
+					<img src="./images/logo.png" alt="Logo" width="100px" height="40px"
+						onclick="location.href='home.do'" style="cursor: pointer;">
+				</div>
 				<br>
-				<img src="images/184.png" alt="" width="100"
-					height="100" onclick="location.href='home.do'" style="cursor: pointer;">
-				<br><br>
-				<h1 class="h4 mb-3"><b>오브리</b>&nbsp; 아이디 찾기</h1>
+				<h1 class="h4 mb-3" align="center">
+					<br> <b>오브리</b>&nbsp;아이디 찾기
+				</h1>
 				<br>
 				<div class="form-floating">
 					<input type="text" class="form-control" id="userName"
@@ -50,27 +53,43 @@
 				</div>
 				<div class="form-floating">
 					<input type="text" class="form-control" id="userEmail"
-						name="userEmail" placeholder="email"> <label for="userEmail">이메일</label>
+						name="userEmail" placeholder="email"> <label
+						for="userEmail">이메일</label>
 				</div>
 
 				<button class="btn w-100 pr-100 fw-bold" type="submit">아이디
 					찾기</button>
+				<br>
+				<br>
+				<p class="mt-4 mb-3 text-body-secondary" align="center"
+					style="font-size: 90%">
+					비밀번호가 기억나지 않으신가요?<br> <a href="findPw.do" style="color: gray">비밀번호
+						찾기</a><br>
+				</p>
 			</form>
 		</c:if>
 
 		<c:if test="${!empty findid}">
 			<h1 class="h4 mb-3 fw-bold" align="center">아이디 찾기 결과</h1>
 			<tr>
-				<th>조회한 아이디:</th>
-				<td>${findid}</td>
+				<th>회원님의 아이디는</th>
+				<td>${findid}입니다.</td>
 			</tr>
-			<br><br>
+			<br>
+			<br>
 			<button class="btn w-100 pr-100 fw-bold" type="button"
 				onclick="location.href='login.do'">확인</button>
+			<br>
+			<br>
+			<p class="mt-4 mb-3 text-body-secondary" align="center"
+				style="font-size: 90%">
+				비밀번호가 기억나지 않으신가요?<br> <a href="findPw.do" style="color: gray">비밀번호
+					찾기</a><br>
+			</p>
 		</c:if>
 
-			<p class="mt-5 mb-3 text-body-secondary" align="center"
-				style="font-size: 80%">&copy; 2023. 1조</p>
+		<p class="mt-5 mb-3 text-body-secondary" align="center"
+			style="font-size: 80%">&copy; 2023. 1조</p>
 
 	</main>
 </body>

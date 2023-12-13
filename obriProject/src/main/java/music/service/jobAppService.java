@@ -13,24 +13,35 @@ import music.model.jobAppVO;
 public class jobAppService {
 	
 	@Autowired
-	private jobAppDao dao;
+	private jobAppDao jad;
 
-	public List<Map<String, Object>> selectAppList(jobAppVO app) { 
-		return dao.selectAppList(app);
+	public List<Map<String, Object>> selectAppList(jobAppVO jobapp) { 
+		return jad.selectAppList(jobapp);
 	}
+
+	public int getAllTotal(jobAppVO jobapp) {
+		return jad.getAllTotal(jobapp);
+	}
+
+	public int updateApp(jobAppVO jobapp) {
+		return jad.updateApp(jobapp);
+	}
+
+	public void updateCancelApp(jobAppVO jobapp) {
+		jad.updateCancelApp(jobapp);
+		
+	}
+
+	public int insertApply(jobAppVO jobapp) {
+		return jad.insertApply(jobapp);
+	}
+
+//	public int updateApply(jobAppVO jobapp) {
+//		return jad.updateApply(jobapp);
+//	}
 
 	public int getAppTotal() {
-		// TODO Auto-generated method stub
-		return dao.getAppTotal();
-	}
-
-	public int updateApp(jobAppVO app) {
-		return dao.updateApp(app);
-	}
-
-	public void updateCancelApp(jobAppVO app) {
-		dao.updateCancelApp(app);
-		
+		return jad.getAppTotal();
 	}
 
 	
